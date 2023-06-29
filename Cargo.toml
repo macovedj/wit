@@ -7,11 +7,13 @@ edition = "2021"
 anyhow = "1.0.71"
 clap = { version = "4.3.3", features = ["derive"] }
 toml_edit = { version = "0.19.10", features = ["serde"] }
-warg-protocol = { git = "https://github.com/bytecodealliance/registry" }
-warg-client = { git = "https://github.com/bytecodealliance/registry" }
-warg-crypto = { git = "https://github.com/bytecodealliance/registry" }
-wit-component = "0.11.0"
-wit-parser = "0.8.0"
+warg-protocol = { path = "../registry/crates/protocol" }
+warg-client = { path = "../registry/crates/client" }
+warg-crypto = { path = "../registry/crates/crypto" }
+wit-component = { path = "../mine/wasm-tools/crates/wit-component" }
+wat = { path = "../mine/wasm-tools/crates/wat" }
+depsparser = { path = "../mine/wasm-tools/crates/depsparser" }
+wit-parser = { path = "../mine/wasm-tools/crates/wit-parser" }
 url = { version = "2.4.0", features = ["serde"] }
 semver = "1.0.17"
 tracing = "0.1.37"

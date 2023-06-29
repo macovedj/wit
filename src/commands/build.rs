@@ -22,7 +22,6 @@ impl BuildCommand {
 
         let (config, config_path) = Config::from_default_file()?
             .with_context(|| format!("failed to find configuration file `{CONFIG_FILE_NAME}`"))?;
-
         let (id, bytes) = build(&config, &config_path).await?;
 
         let output = self

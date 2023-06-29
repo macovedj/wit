@@ -4,7 +4,7 @@ use colored::Colorize;
 use std::process::exit;
 use tracing::metadata::LevelFilter;
 use wit::commands::{
-    AddCommand, BuildCommand, InitCommand, KeyCommand, PublishCommand, UpdateCommand,
+    AddCommand, BuildCommand, InitCommand, KeyCommand, PublishCommand, ResolveCommand, UpdateCommand
 };
 
 fn version() -> &'static str {
@@ -50,6 +50,7 @@ pub enum Command {
     Build(BuildCommand),
     Publish(PublishCommand),
     Key(KeyCommand),
+    Resolve(ResolveCommand),
     Update(UpdateCommand),
 }
 
@@ -64,6 +65,7 @@ async fn main() -> Result<()> {
         Command::Build(cmd) => cmd.exec().await,
         Command::Publish(cmd) => cmd.exec().await,
         Command::Key(cmd) => cmd.exec().await,
+        Command::Resolve(cmd) => cmd.exec().await,
         Command::Update(cmd) => cmd.exec().await,
     } {
         eprintln!("{error}: {e:?}", error = "error".red());

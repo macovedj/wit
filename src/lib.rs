@@ -57,6 +57,8 @@ fn parse(
     let mut deps = IndexMap::new();
     let mut unversioned: HashMap<_, Vec<_>> = HashMap::new();
     for (id, resolution) in dependencies {
+        dbg!(&id);
+        dbg!(&resolution);
         let decoded = resolution.decode()?;
         let name = decoded.package_name();
 
@@ -109,6 +111,7 @@ fn parse(
             } => {
                 fixup_foreign_deps(&mut package, &versions);
                 source_files.extend(package.source_files().map(Path::to_path_buf));
+                dbg!(&source_files);
                 merged.push(package).with_context(|| {
                     format!("failed to merge dependency `{id}`", id = resolution.id())
                 })?
@@ -174,7 +177,8 @@ fn parse(
                     Some(versions) if versions.len() == 1 => {
                         k.version = Some(versions[0].clone());
                     }
-                    _ => {}
+                    _ => {
+                    }
                 }
 
                 (k, v)
@@ -243,10 +247,12 @@ async fn build(config: &Config, config_path: &Path) -> Result<(PackageId, Vec<u8
     let dependencies = resolve_dependencies(config, config_path).await?;
 
     let dir = config_path.parent().unwrap_or_else(|| Path::new("."));
+    dbg!(&dir);
 
     let (mut resolve, package) = parse(dir, &dependencies)?;
 
     let pkg = &mut resolve.packages[package];
+    dbg!(&pkg);
     if pkg.name.version.is_some() {
         bail!(
             "package parsed from `{dir}` has an explicit version",

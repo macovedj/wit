@@ -126,6 +126,7 @@ impl DependencyResolution {
     /// Decodes the resolved dependency.
     pub fn decode(&self) -> Result<DecodedDependency> {
         // If the dependency path is a directory, assume it contains wit to parse as a package.
+        dbg!(self.path());
         if self.path().is_dir() {
             return Ok(DecodedDependency::Wit {
                 resolution: self,
